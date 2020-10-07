@@ -84,7 +84,29 @@ export class AppService {
 
               if ($(elem).is('b')) {
                 item.title = `*${text}*`
-              } else {
+              } else if ($(elem).hasClass('chten')) {
+								const content = [];
+
+              	$('span.chten > div > div').each((index, chtenElem) => {
+              		const parentText = $(chtenElem).clone().children().remove().end().text().trim();
+
+              		if (parentText) {
+              			content.push(`${parentText} `);
+									}
+
+									$(chtenElem).children().each((itemIndex, item) => {
+										if ($(item).is('a')) {
+											const text = $(item).text().trim();
+
+											content.push(`[${text}](${$(item).attr('href')})`);
+										}
+									});
+
+									content.push('\n');
+								});
+
+								item.content = content.filter(v => !!v).slice(0, -1).join('');
+							} else {
                 item.content = `_${text}_`;
               }
             });
@@ -110,8 +132,8 @@ export class AppService {
           	[
           		Markup.callbackButton('Короткие указания', `short_${date}`),
           		Markup.callbackButton('Полные указания', `full_${date}`),
-							Markup.urlButton(`Богослужебные указания ${formattedDate}`, requestURL)
-						], { columns: 2 }).extra({ parse_mode: 'Markdown' });
+							Markup.urlButton(`Богослужебные указания ${formattedDate}`, requestURL),
+						], { columns: 2 }).extra({ parse_mode: 'Markdown', disable_web_page_preview: true });
 
           resolve({ text, buttons });
         }
