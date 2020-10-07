@@ -21,7 +21,7 @@ export class AppService {
 			});
 
 			bot.command('help', ({ replyWithMarkdown }) => {
-				replyWithMarkdown(infoMessage).catch(this.errorHandler)
+				replyWithMarkdown(infoMessage).catch(this.errorHandler);
 			});
 
 			bot.on('message', ({ replyWithMarkdown, message }) => {
@@ -88,29 +88,7 @@ export class AppService {
 
               if ($(elem).is('b')) {
                 item.title = `*${text}*`
-              } else if ($(elem).hasClass('chten')) {
-								const content = [];
-
-              	$('span.chten > div > div').each((index, chtenElem) => {
-              		const parentText = $(chtenElem).clone().children().remove().end().text().trim();
-
-              		if (parentText) {
-              			content.push(`${parentText} `);
-									}
-
-									$(chtenElem).children().each((itemIndex, item) => {
-										if ($(item).is('a')) {
-											const text = $(item).text().trim();
-
-											content.push(`[${text}](${$(item).attr('href')}) `);
-										}
-									});
-
-									content.push('\n');
-								});
-
-								item.content = content.filter(v => !!v).slice(0, -1).join('');
-							} else {
+              } else {
                 item.content = `_${text}_`;
               }
             });
