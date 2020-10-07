@@ -98,7 +98,7 @@ export class AppService {
 										if ($(item).is('a')) {
 											const text = $(item).text().trim();
 
-											content.push(`[${text}](${$(item).attr('href')})`);
+											content.push(`[${text}](${$(item).attr('href')}) `);
 										}
 									});
 
