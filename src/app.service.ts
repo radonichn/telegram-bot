@@ -20,6 +20,10 @@ export class AppService {
 				replyWithMarkdown(`*Добро пожаловать!*\n\n${infoMessage}`).catch(this.errorHandler)
 			});
 
+			bot.command('help', ({ replyWithMarkdown }) => {
+				replyWithMarkdown(infoMessage).catch(this.errorHandler)
+			});
+
 			bot.on('message', ({ replyWithMarkdown, message }) => {
 				this.parsePage(message.text, config.fullMessageDefault).then(({ text, buttons }) => {
 					replyWithMarkdown(text, buttons).catch(this.errorHandler);
